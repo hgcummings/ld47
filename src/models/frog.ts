@@ -1,8 +1,6 @@
 import { Sprite } from "./sprite";
 
 export class Frog extends Sprite {
-
-
     moveClockwise() {
         this.t += this.jumpAngle();
     }
@@ -17,6 +15,10 @@ export class Frog extends Sprite {
 
     moveIn() {
         this.r = Math.max(this.r - 1, 0);
+    }
+
+    get facing(): any {
+        return this.t;
     }
 
     private jumpAngle() {

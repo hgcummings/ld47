@@ -2,6 +2,7 @@ import { View } from '.';
 import GameModel from '../models/game';
 import { CanvasRenderingContextPolar2D } from './helpers/polar';
 import { Sprites } from './sprites';
+import { Sprite } from '../models/sprite';
 
 export default class implements View<GameModel> {
     context: CanvasRenderingContextPolar2D;
@@ -39,6 +40,10 @@ export default class implements View<GameModel> {
             this.renderSprite(this.sprites.lily, lily);
         }
 
+        for (let car of model.level.cars) {
+            this.renderSprite(this.sprites.car, car);
+        }
+
         this.renderSprite(this.sprites.frog, model.frog);
 
         if (model.debug) {
@@ -60,7 +65,7 @@ export default class implements View<GameModel> {
         }
     }
 
-    private renderSprite(sprite, model) {
-        this.context.drawSprite(sprite, model.r * this.unit, model.t, model.t);
+    private renderSprite(sprite: HTMLCanvasElement, model: Sprite) {
+        this.context.drawSprite(sprite, model.r * this.unit, model.t, model.facing);
     }
 }

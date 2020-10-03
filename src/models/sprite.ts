@@ -17,4 +17,6 @@ export abstract class Sprite implements Model {
         this.t = normaliseAngle(this.t + (this.speed * (time - this.lastUpdate) / 1000));
         this.lastUpdate = time;
     }
+
+    abstract get facing();
 }

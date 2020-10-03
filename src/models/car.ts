@@ -1,11 +1,8 @@
 import { Sprite } from "./sprite";
 
-export class Lily extends Sprite {
-    private _facing: number;
-
+export class Car extends Sprite {
     constructor(r:number, t:number, speed:number) {
         super(r, t, speed);
-        this._facing = Math.random() * 2 * Math.PI;
     }
 
     update(time: number) {
@@ -13,6 +10,6 @@ export class Lily extends Sprite {
     }
 
     get facing(): any {
-        return this._facing;
+        return this.t + Math.PI / 2;
     }
 }
