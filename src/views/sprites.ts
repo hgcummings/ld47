@@ -45,7 +45,7 @@ const renderCar = (unit: number) => {
     ctx.fillStyle = '#ccccff';
     ctx.fillRect(0, unit / 4, unit, unit / 2);
 
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = '#333333';
     ctx.beginPath();
     ctx.moveTo(unit / 4, unit / 4);
     ctx.lineTo(unit / 4, unit * 3 / 4);

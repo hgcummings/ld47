@@ -8,7 +8,7 @@ export class CanvasRenderingContextPolar2D {
     static create(canvas: HTMLCanvasElement) {
         const cartesianContext = canvas.getContext('2d');
         cartesianContext.translate(canvas.width / 2, canvas.height / 2);
-        cartesianContext.rotate(- Math.PI / 2);
+        cartesianContext.rotate(-Math.PI / 2);
         return new CanvasRenderingContextPolar2D(cartesianContext);
     }
 
@@ -18,6 +18,10 @@ export class CanvasRenderingContextPolar2D {
 
     set strokeStyle(value) {
         this.context.strokeStyle = value;
+    }
+
+    setLineDash(segments: number[]) {
+        this.context.setLineDash(segments);
     }
 
     beginPath() {

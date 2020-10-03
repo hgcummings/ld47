@@ -10,8 +10,9 @@ export default class implements View<GameModel> {
     height: number;
     unit: number;
     sprites: Sprites;
+    lives: HTMLElement;
 
-    constructor(canvas: HTMLCanvasElement) {
+    constructor(canvas: HTMLCanvasElement, lives: HTMLElement) {
         this.width = canvas.width;
         this.height = canvas.height;
         this.unit = Math.floor(Math.min(canvas.width, canvas.height) / 24);
@@ -19,21 +20,35 @@ export default class implements View<GameModel> {
 
         this.context = CanvasRenderingContextPolar2D.create(canvas);
         this.sprites = new Sprites(this.unit);
+        this.lives = lives;
     }
     
     render(model: GameModel) {
         this.context.fillStyle = '#33cc33';
         this.context.fillCircle(this.unit * 24);
 
-
+        let lastType = null;
         for (let i = model.grid.length - 1; i >= 0; --i) {
+            const type = model.grid[i].type
             this.context.fillStyle = {
                 'road': '#666666',
                 'land': '#33cc33',
                 'pond': '#3333cc'
-            }[model.grid[i].type];
+            }[type];
 
             this.context.fillCircle(this.unit * (i + 1/2));
+
+            if (type === 'road' && lastType === 'road') {
+                const circumference = Math.PI * (1 + 2*i);
+                const dashLength = (circumference / Math.round(circumference / (this.unit * 2))) / 2;
+
+                this.context.setLineDash([dashLength, dashLength]);
+                this.context.strokeStyle = '#cccccc';
+                this.context.circle(this.unit * (i + 1/2));
+                this.context.setLineDash([]);
+            }
+
+            lastType = type;
         }
 
         for (let lily of model.level.lilies) {
@@ -45,6 +60,8 @@ export default class implements View<GameModel> {
         }
 
         this.renderSprite(this.sprites.frog, model.frog);
+
+        this.lives.innerText = 'Lives:' + ' 🐸'.repeat(model.lives);
 
         if (model.debug) {
             this.context.strokeStyle = '#ffcc33';
