@@ -8,9 +8,17 @@ export default class {
                 case 'ArrowUp':
                     model.frog.moveOut();
                     break;
+                case 'KeyA':
+                case 'ArrowLeft':
+                    model.frog.moveAntiClockwise();
+                    break;
                 case 'KeyS':
                 case 'ArrowDown':
                     model.frog.moveIn();
+                    break;
+                case 'KeyD':
+                case 'ArrowRight':
+                    model.frog.moveClockwise();
                     break;
                 case 'Delete':
                     if (event.ctrlKey) {

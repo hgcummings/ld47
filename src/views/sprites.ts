@@ -8,7 +8,7 @@ const renderLily = (unit: number) => {
 
     ctx.fillStyle = '#ff00ff';
     ctx.beginPath();
-    ctx.arc(unit / 2, unit / 2, unit * 23 / 48, 0, 2 * Math.PI);
+    ctx.arc(unit / 2, unit / 2, unit * 21 / 48, 0, 2 * Math.PI);
     ctx.fill();
 
     return canvas;
