@@ -4,8 +4,8 @@ import GameController from './controllers/game';
 
 export default () => {
     const canvas = document.createElement('canvas');
-    canvas.width = 384;
-    canvas.height = 384;
+    canvas.width = 600;
+    canvas.height = 600;
 
     const model = new GameModel();
     const view = new GameView(canvas);

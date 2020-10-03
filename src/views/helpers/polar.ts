@@ -1,0 +1,59 @@
+export class CanvasRenderingContextPolar2D {
+    context: CanvasRenderingContext2D;
+
+    private constructor(context: CanvasRenderingContext2D) {
+        this.context = context;
+    }
+
+    static create(canvas: HTMLCanvasElement) {
+        const cartesianContext = canvas.getContext('2d');
+        cartesianContext.translate(canvas.width / 2, canvas.height / 2);
+        cartesianContext.rotate(- Math.PI / 2);
+        return new CanvasRenderingContextPolar2D(cartesianContext);
+    }
+
+    set fillStyle(value) {
+        this.context.fillStyle = value;
+    }
+
+    set strokeStyle(value) {
+        this.context.strokeStyle = value;
+    }
+
+    beginPath() {
+        this.context.beginPath();
+    }
+
+    lineTo(r: number, t: number) {
+        const {x, y} = this.convert(r, t);
+        this.context.lineTo(x, y);
+    }
+
+    moveTo(r: number, t: number) {
+        const {x, y} = this.convert(r, t);
+        this.context.moveTo(x, y);
+    }
+
+    stroke() {
+        this.context.stroke();
+    }
+
+    circle(radius: number) {
+        this.context.beginPath();
+        this.context.arc(0, 0, radius, 0, 2 * Math.PI);
+        this.context.stroke();
+    }
+    
+    fillCircle(radius: number) {
+        this.context.beginPath();
+        this.context.arc(0, 0, radius, 0, 2 * Math.PI);
+        this.context.fill();
+    };
+
+    private convert(r: number, t: number) {
+        return {
+            x: r * Math.cos(t),
+            y: r * Math.sin(t)
+        }
+    }
+}
