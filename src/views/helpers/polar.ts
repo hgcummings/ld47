@@ -50,9 +50,13 @@ export class CanvasRenderingContextPolar2D {
         this.context.fill();
     };
 
-    drawSprite(sprite: HTMLCanvasElement, r: number, t: number) {
+    drawSprite(sprite: HTMLCanvasElement, r: number, t: number, rotation: number) {
         const {x, y} = this.convert(r, t);
-        this.context.drawImage(sprite, x - (sprite.width / 2), y - (sprite.height / 2));
+        this.context.save();
+        this.context.translate(x, y);
+        this.context.rotate(rotation);
+        this.context.drawImage(sprite, -sprite.width / 2, -sprite.height / 2);
+        this.context.restore();
     }
 
     private convert(r: number, t: number) {

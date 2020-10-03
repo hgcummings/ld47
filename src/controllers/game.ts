@@ -1,13 +1,25 @@
 import GameModel from '../models/game';
 
 export default class {
-    model: GameModel;
-
     constructor(model: GameModel) {
-        this.model = model;
-
-        window.addEventListener('keyup', event => {
-            this.model.toggleDebug();
+        window.addEventListener('keydown', event => {
+            switch (event.code) {
+                case 'KeyW':
+                case 'ArrowUp':
+                    model.frog.moveOut();
+                    break;
+                case 'KeyS':
+                case 'ArrowDown':
+                    model.frog.moveIn();
+                    break;
+                case 'Delete':
+                    if (event.ctrlKey) {
+                        model.toggleDebug();
+                    }
+                    break;
+                default:
+                    break;
+            }
         });
     }
 }

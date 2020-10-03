@@ -36,8 +36,10 @@ export default class implements View<GameModel> {
         }
 
         for (let lily of model.level.lilies) {
-            this.context.drawSprite(this.sprites.lily, lily.r * this.unit, lily.t);
+            this.renderSprite(this.sprites.lily, lily);
         }
+
+        this.renderSprite(this.sprites.frog, model.frog);
 
         if (model.debug) {
             this.context.strokeStyle = '#ffcc33';
@@ -56,5 +58,9 @@ export default class implements View<GameModel> {
                 }
             }
         }
+    }
+
+    private renderSprite(sprite, model) {
+        this.context.drawSprite(sprite, model.r * this.unit, model.t, model.t);
     }
 }
