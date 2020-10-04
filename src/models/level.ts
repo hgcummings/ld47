@@ -1,6 +1,7 @@
 import { Model } from ".";
 import { Lily } from "../sprites/lily";
 import { Car } from "../sprites/car";
+import { range, shuffle } from "./helpers";
 
 export class Level implements Model {
     lilies: Array<Lily>
@@ -32,10 +33,10 @@ export class Level implements Model {
         const step = 2 * Math.PI / spaces;
         const offset = step * Math.random();
 
-        for (let i = 0; i < spaces; ++i) {
-            if (Math.random() < density) {
-                addAtAngle(offset + (i * step));
-            }
+        const allSpaces = range(spaces);
+        shuffle(allSpaces);
+        for (let i = 0; i < Math.max(1, Math.round(density * spaces)); ++i) {
+            addAtAngle(offset + (allSpaces[i] * step));
         }
     }
 
