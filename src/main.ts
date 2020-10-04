@@ -21,7 +21,6 @@ export default () => {
     }
     
     enterTitle();
-    titleController.exit();
 
     animate = () => {
         currentController.update();
