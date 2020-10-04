@@ -7,25 +7,34 @@ export class Level implements Model {
     cars: Array<Car>
     homes: Boolean[];
 
-    constructor(grid, density) {
+    constructor(grid, difficulty) {
         this.lilies = [];
         this.cars = [];
         this.homes = [false, false, false, false];
         for (let r = 0; r < grid.length; ++r) {
             const type = grid[r].type
-            if (type === 'pond' || type === 'road') {
-                const length = 2 * Math.PI * r;
-                const spaces = Math.floor(length) / (type === 'road' ? 2 : 1);
-                const step = 2 * Math.PI / spaces;
-                const offset = step * Math.random();
+            const length = 2 * Math.PI * r;
+            if (type === 'pond') {
+                this.populateRow(
+                    Math.floor(length),
+                    0.7 - (0.1 * difficulty),
+                    t => this.lilies.push(new Lily(r, t, grid[r].speed)))
+            } else if (type === 'road') {
+                this.populateRow(
+                    Math.floor(length) / 2,
+                    0.225 + (0.075 * difficulty),
+                    t => this.cars.push(new Car(r, t, grid[r].speed)))
+            }
+        }
+    }
 
-                for (let i = 0; i < spaces; ++i) {
-                    if (type === 'pond' && Math.random() < density) {
-                        this.lilies.push(new Lily(r, offset + (i * step), grid[r].speed));
-                    } else if (type === 'road' && Math.random() < density) {
-                        this.cars.push(new Car(r, offset + (i * step), grid[r].speed));
-                    }
-                }
+    populateRow(spaces, density, addAtAngle: (number) => void) {
+        const step = 2 * Math.PI / spaces;
+        const offset = step * Math.random();
+
+        for (let i = 0; i < spaces; ++i) {
+            if (Math.random() < density) {
+                addAtAngle(offset + (i * step));
             }
         }
     }

@@ -29,7 +29,7 @@ export default class implements Model {
     lives: number = 3;
 
     constructor() {
-        this.level = new Level(this.grid, 0.5);
+        this.level = new Level(this.grid, 1);
         this.frog = new Frog(0, 0, 0);
     }
     
