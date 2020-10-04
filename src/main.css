@@ -1,3 +1,56 @@
-.main {
-    color: red;
+html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Galindo', sans-serif;
+}
+
+#root {
+    background-color: green;
+    margin: 0 auto;
+    width: 100vh;
+    height: 100vh;
+    color: white;
+    padding: 0 3.3vh;
+    box-sizing: border-box;
+    line-height: 3.85vh;
+    font-size: 2.5vh;
+}
+
+#game {
+    box-sizing: border-box;
+    border-radius: 2%;
+    border: 0.55vh solid black;
+    background-color: white;
+}
+
+#title {
+    display: block;
+    text-align: center;
+    padding: 10vh;
+    font-size: 4vh;
+    line-height: 400%;
+}
+
+#title h1 {
+    font-size: 400%;
+}
+
+@media(max-aspect-ratio: 1/1) {
+    #root {
+        height: 100vw;
+        width: 100vw;
+        padding: 0 3.3vw;
+        line-height: 3.85vw;
+        font-size: 2.5vw;
+    }
+
+    #game {
+        border-width: 0.55vw;
+    }
+
+    #title {
+        padding: 10vw;
+        font-size: 4vw;
+    }
 }

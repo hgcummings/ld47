@@ -1,30 +1,30 @@
-import GameModel from './models/game';
-import GameView from './views/game';
 import GameController from './controllers/game';
+import TitleController from './controllers/title';
+import { Controller } from './controllers';
+
 
 export default () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 800;
-    canvas.height = 800;
+    let currentController: Controller;
+    let animate: () => void;
 
-    const lives = document.createElement('div');
+    let titleController = new TitleController();
+    let gameController = new GameController();
 
-    const model = new GameModel();
-    const view = new GameView(canvas, lives);
-    const controller = new GameController(model);
+    const enterTitle = () => {
+        currentController = titleController;
+        titleController.enter(enterGame);
+    };
 
-    const animate = () => {
-        const gameTime = Date.now() - startTime;
-        model.update(gameTime);
-        view.render(model);
-        
+    const enterGame = () => {
+        currentController = gameController;
+        gameController.enter(enterTitle);
+    }
+    
+    enterTitle();
+
+    animate = () => {
+        currentController.update();
         window.requestAnimationFrame(animate);
     }
-
-    const root = document.getElementById('root');
-    root.appendChild(canvas);
-    root.appendChild(lives);
-
-    const startTime = Date.now();
     window.requestAnimationFrame(animate);
 };

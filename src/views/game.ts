@@ -15,7 +15,6 @@ export default class implements View<GameModel> {
         this.width = canvas.width;
         this.height = canvas.height;
         this.unit = Math.floor(Math.min(canvas.width, canvas.height) / 24);
-        canvas.style.backgroundColor = '#33cc33';
 
         this.context = CanvasRenderingContextPolar2D.create(canvas);
         this.mask = this.renderMask();
