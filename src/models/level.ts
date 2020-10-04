@@ -1,7 +1,6 @@
-import { Turtle } from "./turtle";
 import { Model } from ".";
-import { Lily } from "./lily";
-import { Car } from "./car";
+import { Lily } from "../sprites/lily";
+import { Car } from "../sprites/car";
 
 export class Level implements Model {
     lilies: Array<Lily>

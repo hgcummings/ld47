@@ -1,15 +1,14 @@
 import { View } from '.';
 import GameModel from '../models/game';
 import { CanvasRenderingContextPolar2D } from './helpers/polar';
-import { Sprites } from './sprites';
-import { Sprite } from '../models/sprite';
+import { Sprite } from '../sprites';
 
 export default class implements View<GameModel> {
     context: CanvasRenderingContextPolar2D;
     width: number;
     height: number;
     unit: number;
-    sprites: Sprites;
+    mask: HTMLCanvasElement;
     lives: HTMLElement;
 
     constructor(canvas: HTMLCanvasElement, lives: HTMLElement) {
@@ -19,7 +18,7 @@ export default class implements View<GameModel> {
         canvas.style.backgroundColor = '#33cc33';
 
         this.context = CanvasRenderingContextPolar2D.create(canvas);
-        this.sprites = new Sprites(this.unit);
+        this.mask = this.renderMask();
         this.lives = lives;
     }
     
@@ -53,18 +52,24 @@ export default class implements View<GameModel> {
 
         this.lives.innerText = 'Lives:' + ' 🐸'.repeat(model.lives);
 
+        if (model.death) {
+            this.renderSprite(model.death);
+        }
+
         for (let lily of model.level.lilies) {
-            this.renderSprite(this.sprites.lily, lily);
+            this.renderSprite(lily);
         }
 
         for (let car of model.level.cars) {
-            this.renderSprite(this.sprites.car, car);
+            this.renderSprite(car);
         }
 
-        this.renderSprite(this.sprites.frog, model.frog);
+        if (model.frog.alive) {
+            this.renderSprite(model.frog);
+        }
 
         if (!model.debug) {
-            this.renderSprite(this.sprites.mask, model.frog);
+            this.renderImageForSprite(this.mask, model.frog);
         } else {
             this.context.strokeStyle = '#ffcc33';
             for (let i = 1; i < model.grid.length; ++i) {
@@ -84,7 +89,42 @@ export default class implements View<GameModel> {
         }
     }
 
-    private renderSprite(sprite: HTMLCanvasElement, model: Sprite) {
-        this.context.drawSprite(sprite, model.r * this.unit, model.t, model.facing);
+    private renderSprite(sprite: Sprite) {
+        this.renderImageForSprite(sprite.getCurrentFrame(this.unit), sprite);
+    }
+
+    private renderImageForSprite(image: HTMLCanvasElement, sprite: Sprite) {
+        this.context.drawSprite(image, sprite.r * this.unit, sprite.t, sprite.facing);
+    }
+
+    private renderMask() {
+        const canvas = document.createElement('canvas');
+        canvas.width = this.unit * 64;
+        canvas.height = this.unit * 64;
+    
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+    
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+        ctx.globalCompositeOperation = 'xor';
+    
+        ctx.filter = `blur(${this.unit}px)`;
+    
+    
+        ctx.beginPath();
+        ctx.ellipse(
+            (this.unit * 3) + (canvas.width / 2),
+            canvas.height / 2,
+            this.unit * 9,
+            this.unit * 6,
+            0,
+            0,
+            2 * Math.PI);
+
+        ctx.fill();
+    
+    
+        return canvas;
     }
 }

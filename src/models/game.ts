@@ -1,7 +1,10 @@
 import { Model } from ".";
 import { Level } from "./level";
-import { Frog } from "./frog";
+import { Frog } from "../sprites/frog";
 import { angularDistance } from "./helpers";
+import { Splosh } from "../sprites/splosh";
+import { FiniteSprite } from "../sprites";
+import { Splat } from "../sprites/splat";
 
 export default class implements Model {
     debug: boolean = false;
@@ -21,6 +24,7 @@ export default class implements Model {
     ];
     level: Level;
     frog: Frog;
+    death: FiniteSprite;
     lives: number = 3;
 
     constructor() {
@@ -29,36 +33,51 @@ export default class implements Model {
     }
     
     update(time: number) {
-        switch (this.grid[this.frog.r].type) {
-            case 'land':
-                this.frog.speed = 0;
-                break;
-            case 'pond':
-                let onLily = false;
-                for (let lily of this.level.lilies) {
-                    if (this.frogCollidesWith(lily)) {
-                        this.frog.t = lily.t;
-                        this.frog.speed = lily.speed;
-                        onLily = true;
-                        break;
+        if (this.frog.alive) {
+            switch (this.grid[this.frog.r].type) {
+                case 'land':
+                    this.frog.speed = 0;
+                    break;
+                case 'pond':
+                    let onLily = false;
+                    for (let lily of this.level.lilies) {
+                        if (this.frogCollidesWith(lily)) {
+                            this.frog.t = lily.t;
+                            this.frog.speed = lily.speed;
+                            onLily = true;
+                            break;
+                        }
                     }
-                }
-                if (!onLily) {
-                    this.lives -= 1;
-                    this.frog = new Frog(0, 0, 0);
-                }
-                break;
-            case 'road':
-                this.frog.speed = 0;
-                for (let car of this.level.cars) {
-                    if (this.frogCollidesWith(car)) {
+                    if (!onLily) {
                         this.lives -= 1;
-                        this.frog = new Frog(0, 0, 0);
-                        break;
+                        this.death = new Splosh(this.frog.r, this.frog.t, time);
+                        this.frog.die();
                     }
-                }
-                break;
+                    break;
+                case 'road':
+                    this.frog.speed = 0;
+                    for (let car of this.level.cars) {
+                        if (this.frogCollidesWith(car)) {
+                            this.lives -= 1;
+                            this.death = new Splat(this.frog.r, this.frog.t, time);
+                            this.frog.die();
+                            break;
+                        }
+                    }
+                    break;
+            }
+        } else {
+            this.frog.speed = 0;
         }
+
+        if (this.death) {
+            this.death.update(time);
+            if (!this.death.active) {
+                this.death = null;
+                this.frog = new Frog(0, 0, 0);
+            }
+        }
+
         this.level.update(time);
         this.frog.update(time);
     }
