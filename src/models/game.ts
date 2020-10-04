@@ -21,6 +21,7 @@ export default class implements Model {
         { tiles: 48, type: 'road', speed: 0.25 * Math.PI },
         { tiles: 48, type: 'road', speed: 0.2 * Math.PI },
         { tiles: 48, type: 'road', speed: 0.15 * Math.PI },
+        { tiles: 1, type: 'home' }
     ];
     level: Level;
     frog: Frog;
@@ -34,6 +35,23 @@ export default class implements Model {
     
     update(time: number) {
         if (this.frog.alive) {
+            if (this.grid[this.frog.r].type === 'home') {
+                let home = null;
+                for (let i = 0; i < 4; ++i) {
+                    if (angularDistance(this.homeT(i), this.frog.t) < Math.PI * 3 / 16) {
+                        home = i;
+                        break;
+                    }
+                }
+
+                if (home === null || this.level.homes[home]) {
+                    this.frog.moveIn();
+                } else {
+                    this.level.homes[home] = true;
+                    this.frog = new Frog(0, 0, 0);
+                }
+            }
+
             switch (this.grid[this.frog.r].type) {
                 case 'land':
                     this.frog.speed = 0;
@@ -80,6 +98,10 @@ export default class implements Model {
 
         this.level.update(time);
         this.frog.update(time);
+    }
+
+    homeT(i):number {
+        return Math.PI * ((1/4) + (i / 2));
     }
 
     toggleDebug() {

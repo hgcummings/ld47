@@ -5,10 +5,12 @@ import { Car } from "../sprites/car";
 export class Level implements Model {
     lilies: Array<Lily>
     cars: Array<Car>
+    homes: Boolean[];
 
     constructor(grid, density) {
         this.lilies = [];
         this.cars = [];
+        this.homes = [false, false, false, false];
         for (let r = 0; r < grid.length; ++r) {
             const type = grid[r].type
             if (type === 'pond' || type === 'road') {

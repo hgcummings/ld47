@@ -38,6 +38,9 @@ export default class implements Controller {
     update() {
         const gameTime = Date.now() - this.startTime;
         this.model.update(gameTime);
+        if (this.model.lives === 0) {
+            this.exit();
+        }
         this.view.render(this.model);
     }
 
@@ -47,6 +50,7 @@ export default class implements Controller {
         root.removeChild(this.lives);
         window.removeEventListener('keydown', this.keyHandler);
         window.removeEventListener('resize', this.initView);
+        this.onExit();
     }
 
     constructor() {
