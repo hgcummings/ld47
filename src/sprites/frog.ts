@@ -2,6 +2,7 @@ import { Sprite } from ".";
 
 export class Frog extends Sprite {
     alive: boolean = true;
+    maxR: number = 0;
 
     die() {
         this.alive = false;

@@ -11,8 +11,9 @@ export default class implements View<GameModel> {
     mask: HTMLCanvasElement;
     home: HTMLCanvasElement;
     lives: HTMLElement;
+    score: HTMLElement;
 
-    constructor(canvas: HTMLCanvasElement, lives: HTMLElement) {
+    constructor(canvas: HTMLCanvasElement, lives: HTMLElement, score: HTMLElement) {
         this.width = canvas.width;
         this.height = canvas.height;
         this.unit = Math.floor(Math.min(canvas.width, canvas.height) / 24);
@@ -21,6 +22,7 @@ export default class implements View<GameModel> {
         this.mask = this.renderMask();
         this.home = this.renderHome();
         this.lives = lives;
+        this.score = score;
     }
     
     render(model: GameModel) {
@@ -60,7 +62,8 @@ export default class implements View<GameModel> {
             lastType = type;
         }
 
-        this.lives.innerText = 'Lives:' + ' 🐸'.repeat(model.lives);
+        this.lives.innerText = ' 🐸'.repeat(model.lives);
+        this.score.innerText = model.score.toString();
 
         for (let home = 0; home < model.level.homes.length; ++home) {
             if (model.level.homes[home]) {

@@ -26,11 +26,22 @@ export default class implements Model {
     level: Level;
     frog: Frog;
     death: FiniteSprite;
+    maxR: number;
     lives: number = 3;
+    score: number = 0;
 
     constructor() {
         this.level = new Level(this.grid, 1);
+        this.maxR = 0;
         this.frog = new Frog(0, 0, 0);
+    }
+
+    checkScore() {
+        if (this.frog.alive && this.frog.r > this.maxR) {
+            this.maxR = this.frog.r;
+            return 10;
+        }
+        return 0;
     }
     
     update(time: number) {
@@ -48,6 +59,8 @@ export default class implements Model {
                     this.frog.moveIn();
                 } else {
                     this.level.homes[home] = true;
+                    this.score += 400;
+                    this.maxR = 0;
                     this.frog = new Frog(0, 0, 0);
                 }
             }
@@ -71,6 +84,8 @@ export default class implements Model {
                         this.death = new Splosh(this.frog.r, this.frog.t, time);
                         this.frog.die();
                     }
+
+                    this.score += this.checkScore();
                     break;
                 case 'road':
                     this.frog.speed = 0;
@@ -82,6 +97,8 @@ export default class implements Model {
                             break;
                         }
                     }
+
+                    this.score += this.checkScore();
                     break;
             }
         } else {

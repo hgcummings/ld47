@@ -32,6 +32,21 @@ html, body {
     line-height: 400%;
 }
 
+#stats {
+    display: flex;
+    margin: 0;
+}
+
+#stats dd, #stats dl {
+    margin: 0;
+    margin-inline-start: 0;
+    flex: 2;
+}
+
+#stats dd.lives {
+    flex: 12;
+}
+
 #title h1 {
     font-size: 400%;
 }
