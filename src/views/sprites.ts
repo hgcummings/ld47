@@ -35,6 +35,29 @@ const renderFrog = (unit: number) => {
     return canvas;
 }
 
+const renderMask = (unit: number) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = unit * 64;
+    canvas.height = unit * 64;
+
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.globalCompositeOperation = 'xor';
+
+    ctx.filter = `blur(${unit}px)`;
+
+
+    ctx.beginPath();
+    ctx.ellipse((unit * 3) + (canvas.width / 2), canvas.height / 2, unit * 9, unit * 6, 0, 0, 2 * Math.PI);
+    ctx.fill();
+
+
+    return canvas;
+}
+
 const renderCar = (unit: number) => {
     const canvas = document.createElement('canvas');
     canvas.width = unit;
@@ -103,10 +126,12 @@ export class Sprites {
     lily: HTMLCanvasElement;
     frog: HTMLCanvasElement;
     car: HTMLCanvasElement;
+    mask: HTMLCanvasElement;
 
     constructor(unit) {
         this.lily = renderLily(unit);
         this.frog = renderFrog(unit);
         this.car = renderCar(unit);
+        this.mask = renderMask(unit);
     }
 }

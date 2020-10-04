@@ -60,6 +60,7 @@ export default class implements View<GameModel> {
         }
 
         this.renderSprite(this.sprites.frog, model.frog);
+        this.renderSprite(this.sprites.mask, model.frog);
 
         this.lives.innerText = 'Lives:' + ' 🐸'.repeat(model.lives);
 
