@@ -9,7 +9,6 @@ export default class implements View<GameModel> {
     height: number;
     unit: number;
     mask: HTMLCanvasElement;
-    home: HTMLCanvasElement;
     lives: HTMLElement;
     score: HTMLElement;
 
@@ -20,7 +19,6 @@ export default class implements View<GameModel> {
 
         this.context = CanvasRenderingContextPolar2D.create(canvas);
         this.mask = this.renderMask();
-        this.home = this.renderHome();
         this.lives = lives;
         this.score = score;
     }
@@ -65,15 +63,14 @@ export default class implements View<GameModel> {
         this.lives.innerText = ' 🐸'.repeat(model.lives);
         this.score.innerText = model.score.toString();
 
-        for (let home = 0; home < model.level.homes.length; ++home) {
-            if (model.level.homes[home]) {
-                const t = model.homeT(home);
-                this.context.drawSprite(this.home, (8 * this.unit) + (this.home.width / 2), t, t);
+        for (const home of model.level.homes) {
+            if (home) {
+                this.renderSprite(home);
             }
         }
 
-        if (model.death) {
-            this.renderSprite(model.death);
+        if (model.fate) {
+            this.renderSprite(model.fate);
         }
 
         for (let lily of model.level.lilies) {
@@ -84,7 +81,7 @@ export default class implements View<GameModel> {
             this.renderSprite(car);
         }
 
-        if (model.frog.alive) {
+        if (model.frog.active) {
             this.renderSprite(model.frog);
         }
 
@@ -115,40 +112,6 @@ export default class implements View<GameModel> {
 
     private renderImageForSprite(image: HTMLCanvasElement, sprite: Sprite) {
         this.context.drawSprite(image, sprite.r * this.unit, sprite.t, sprite.facing);
-    }
-
-    private renderHome() {
-        const canvas = document.createElement('canvas');
-        canvas.width = this.width;
-        canvas.height = 15 * this.unit;
-
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#990000';
-        ctx.fillRect(this.unit * 6, this.unit * 25 / 4, this.unit * 3 / 2, this.unit * 5 / 2);
-
-        ctx.fillStyle = '#cccccc';
-        for (let i = 0; i < 3; ++i) {
-            ctx.beginPath();
-            ctx.ellipse((this.unit * 4.15) + (i * this.unit * 3 / 4), this.unit * 15 / 2, this.unit * 5 / 16, this.unit * 3 / 8, 0, 0, 2 * Math.PI);
-            ctx.fill();
-        }
-
-        const drawFence = () => {
-            ctx.beginPath();
-            ctx.moveTo(this.unit * 6.3, - this.unit * 3);
-            ctx.arc(-8 * this.unit, this.unit * 15 / 2, this.unit * 11.75, - 0.55, 0.55);
-            ctx.lineTo(this.unit * 6.3, this.unit * 18);
-        }
-
-        ctx.strokeStyle = '#ffffff';
-        drawFence();
-        ctx.stroke();
-        ctx.setLineDash([this.unit / 8, this.unit / 8]);
-        ctx.lineWidth = 3;
-        drawFence()
-        ctx.stroke();
-
-        return canvas;
     }
 
     private renderMask() {

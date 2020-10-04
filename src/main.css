@@ -24,12 +24,16 @@ html, body {
     background-color: white;
 }
 
-#title {
+.splash {
     display: block;
     text-align: center;
     padding: 10vh;
     font-size: 4vh;
     line-height: 400%;
+}
+
+.splash h1 {
+    font-size: 400%;
 }
 
 #stats {
@@ -47,10 +51,6 @@ html, body {
     flex: 12;
 }
 
-#title h1 {
-    font-size: 400%;
-}
-
 @media(max-aspect-ratio: 1/1) {
     #root {
         height: 100vw;
@@ -64,7 +64,7 @@ html, body {
         border-width: 0.55vw;
     }
 
-    #title {
+    .splash {
         padding: 10vw;
         font-size: 4vw;
     }

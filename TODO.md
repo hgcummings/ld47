@@ -6,7 +6,6 @@ Project Description
 
 - [ ] Game over screen  
 - [ ] Handle level win  
-- [ ] Pause input handling after reaching home
 - [ ] Add progression of levels  
 - [ ] High score
 - [ ] Add sounds  
@@ -35,3 +34,4 @@ Project Description
 - [x] Make first level easier
 - [x] Reduce randomness of NPC sprites
 - [x] Track score
+- [x] Pause after reaching home

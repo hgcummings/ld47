@@ -1,33 +1,33 @@
 import { Sprite } from ".";
 
 export class Frog extends Sprite {
-    alive: boolean = true;
+    active: boolean = true;
     maxR: number = 0;
 
-    die() {
-        this.alive = false;
+    end() {
+        this.active = false;
     }
 
     moveClockwise() {
-        if (this.alive) {
+        if (this.active) {
             this.t += this.jumpAngle();
         }
     }
 
     moveAntiClockwise() {
-        if (this.alive) {
+        if (this.active) {
             this.t -= this.jumpAngle();
         }
     }
 
     moveOut() {
-        if (this.alive) {
+        if (this.active) {
             this.r += 1;
         }
     }
 
     moveIn() {
-        if (this.alive) {
+        if (this.active) {
             this.r = Math.max(this.r - 1, 0);
         }
     }

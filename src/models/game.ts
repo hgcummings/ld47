@@ -5,6 +5,7 @@ import { angularDistance } from "./helpers";
 import { Splosh } from "../sprites/splosh";
 import { FiniteSprite } from "../sprites";
 import { Splat } from "../sprites/splat";
+import { Home } from "../sprites/home";
 
 export default class implements Model {
     debug: boolean = false;
@@ -25,7 +26,7 @@ export default class implements Model {
     ];
     level: Level;
     frog: Frog;
-    death: FiniteSprite;
+    fate: FiniteSprite;
     maxR: number;
     lives: number = 3;
     score: number = 0;
@@ -37,7 +38,7 @@ export default class implements Model {
     }
 
     checkScore() {
-        if (this.frog.alive && this.frog.r > this.maxR) {
+        if (this.frog.active && this.frog.r > this.maxR) {
             this.maxR = this.frog.r;
             return 10;
         }
@@ -45,11 +46,11 @@ export default class implements Model {
     }
     
     update(time: number) {
-        if (this.frog.alive) {
+        if (this.frog.active) {
             if (this.grid[this.frog.r].type === 'home') {
                 let home = null;
                 for (let i = 0; i < 4; ++i) {
-                    if (angularDistance(this.homeT(i), this.frog.t) < Math.PI * 3 / 16) {
+                    if (angularDistance(Home.angle(i), this.frog.t) < Math.PI * 3 / 16) {
                         home = i;
                         break;
                     }
@@ -58,10 +59,12 @@ export default class implements Model {
                 if (home === null || this.level.homes[home]) {
                     this.frog.moveIn();
                 } else {
-                    this.level.homes[home] = true;
+                    const newHome = new Home(home, time)
+                    this.fate = newHome;
+                    this.level.homes[home] = newHome;
                     this.score += 400;
                     this.maxR = 0;
-                    this.frog = new Frog(0, 0, 0);
+                    this.frog.end();
                 }
             }
 
@@ -81,8 +84,8 @@ export default class implements Model {
                     }
                     if (!onLily) {
                         this.lives -= 1;
-                        this.death = new Splosh(this.frog.r, this.frog.t, time);
-                        this.frog.die();
+                        this.fate = new Splosh(this.frog.r, this.frog.t, time);
+                        this.frog.end();
                     }
 
                     this.score += this.checkScore();
@@ -92,8 +95,8 @@ export default class implements Model {
                     for (let car of this.level.cars) {
                         if (this.frogCollidesWith(car)) {
                             this.lives -= 1;
-                            this.death = new Splat(this.frog.r, this.frog.t, time);
-                            this.frog.die();
+                            this.fate = new Splat(this.frog.r, this.frog.t, time);
+                            this.frog.end();
                             break;
                         }
                     }
@@ -105,20 +108,16 @@ export default class implements Model {
             this.frog.speed = 0;
         }
 
-        if (this.death) {
-            this.death.update(time);
-            if (!this.death.active) {
-                this.death = null;
+        if (this.fate) {
+            this.fate.update(time);
+            if (!this.fate.active) {
+                this.fate = null;
                 this.frog = new Frog(0, 0, 0);
             }
         }
 
         this.level.update(time);
         this.frog.update(time);
-    }
-
-    homeT(i):number {
-        return Math.PI * ((1/4) + (i / 2));
     }
 
     toggleDebug() {

@@ -2,16 +2,17 @@ import { Model } from ".";
 import { Lily } from "../sprites/lily";
 import { Car } from "../sprites/car";
 import { range, shuffle } from "./helpers";
+import { Home } from "../sprites/home";
 
 export class Level implements Model {
     lilies: Array<Lily>
     cars: Array<Car>
-    homes: Boolean[];
+    homes: Array<Home>
 
     constructor(grid, difficulty) {
         this.lilies = [];
         this.cars = [];
-        this.homes = [false, false, false, false];
+        this.homes = [];
         for (let r = 0; r < grid.length; ++r) {
             const type = grid[r].type
             const length = 2 * Math.PI * r;
