@@ -51,6 +51,8 @@ export default class implements View<GameModel> {
             lastType = type;
         }
 
+        this.lives.innerText = 'Lives:' + ' 🐸'.repeat(model.lives);
+
         for (let lily of model.level.lilies) {
             this.renderSprite(this.sprites.lily, lily);
         }
@@ -60,11 +62,10 @@ export default class implements View<GameModel> {
         }
 
         this.renderSprite(this.sprites.frog, model.frog);
-        this.renderSprite(this.sprites.mask, model.frog);
 
-        this.lives.innerText = 'Lives:' + ' 🐸'.repeat(model.lives);
-
-        if (model.debug) {
+        if (!model.debug) {
+            this.renderSprite(this.sprites.mask, model.frog);
+        } else {
             this.context.strokeStyle = '#ffcc33';
             for (let i = 1; i < model.grid.length; ++i) {
                 const row = model.grid[i];
