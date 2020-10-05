@@ -27,7 +27,7 @@ html, body {
 .splash {
     display: block;
     text-align: center;
-    padding: 10vh;
+    padding: 10vh 0;
     font-size: 4vh;
     line-height: 400%;
 }
@@ -65,7 +65,7 @@ html, body {
     }
 
     .splash {
-        padding: 10vw;
+        padding: 10vw 0;
         font-size: 4vw;
     }
 }

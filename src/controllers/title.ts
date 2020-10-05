@@ -7,24 +7,39 @@ export default class implements Controller<GameData> {
     currentData: GameData;
     startTime: number;
     listening: boolean;
+    messageHolder: HTMLElement;
+    messages: string[] = [];
 
     enter(exitCallback: (data: GameData) => void, data: GameData) {
+        this.messages = [];
+
         const title = document.getElementById('title');
         title.style.display = 'block';
 
         const heading = title.firstElementChild as HTMLElement;
+        this.messageHolder = document.createElement('p');
+        title.appendChild(this.messageHolder);
 
         if (data.nextLevel === -1){
             heading.innerText = 'Game Over';
-            const score = document.createElement('p');
-            score.innerText = `Score: ${data.score}`;
-            title.appendChild(score);
+            const previousHighScore = parseInt(localStorage.getItem('highScore') || '0', 10);
+            if (data.score > previousHighScore) {
+                localStorage.setItem('highScore', data.score.toString(10));
+            }
+            this.messages.push(`Score: ${data.score}`);
+        } else if (data.nextLevel === 1) {
+            heading.innerText = 'Loop Frog';
+            this.messages.push('Controls: arrow keys or W/A/S/D');
         } else {
-            heading.innerText = data.nextLevel === 1 ? 'LoopFrog' : `Level ${data.nextLevel}`
+            heading.innerText = `Level ${data.nextLevel}`
+            this.messages.push(`Score: ${data.score}`);
+        }
 
-            const controls = document.createElement('p');
-            controls.innerText = 'Controls: arrow keys or W/A/S/D';
-            title.appendChild(controls);
+        if (data.nextLevel < 2) {
+            const highScore = localStorage.getItem('highScore');
+            if (highScore !== null) {
+                this.messages.push(`High score: ${highScore}`);
+            }
         }
 
         this.currentData = data;
@@ -47,11 +62,14 @@ export default class implements Controller<GameData> {
             }
 
             instruction.innerText = `Press any key to ${verb}`;
-                
+
             title.appendChild(instruction);
             window.addEventListener('keydown', this.handler);
             this.listening = true;
         }
+
+        this.messageHolder.innerText =
+            this.messages[Math.floor((Date.now() - this.startTime) / 2250) % this.messages.length];
     }
 
     exit() {

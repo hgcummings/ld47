@@ -4,7 +4,6 @@ Project Description
 
 ### Todo
 
-- [ ] High score
 - [ ] Make turtles dive/resurface  
 - [ ] Make cars change lanes  
 
@@ -42,3 +41,4 @@ Project Description
   - [x] Road
   - [x] End animation
   - [x] Frog
+- [x] High score

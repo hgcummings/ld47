@@ -65,7 +65,7 @@ export default class implements View<GameModel> {
         }
 
         this.lives.innerText = ' 🐸'.repeat(model.lives);
-        this.score.innerText = model.score.toString();
+        this.score.innerText = model.score.toString(10);
 
         for (const home of model.level.homes) {
             if (home) {
