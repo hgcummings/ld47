@@ -8,6 +8,7 @@ import { Splat } from "../sprites/splat";
 import { Home } from "../sprites/home";
 import * as sounds from '../sounds';
 import { GameData } from "./gameData";
+import { PendingResult } from "./pendingResult";
 
 export default class implements Model {
     debug: boolean = false;
@@ -32,6 +33,7 @@ export default class implements Model {
     maxR: number;
     score: number;
     lives: number = 3;
+    pendingResult: PendingResult<GameData> = null;
     result: GameData = null;
 
     constructor(data: GameData) {
@@ -134,13 +136,26 @@ export default class implements Model {
             this.fate.update(time);
             if (!this.fate.active) {
                 if (this.lives === 0) {
-                    this.result = { nextLevel: -1, score: this.score };
+                    this.pendingResult = new PendingResult<GameData>(
+                        { nextLevel: -1, score: this.score},
+                        1500);
                 } else if (this.level.completed()) {
-                    this.result = { nextLevel: this.level.difficulty + 1, score: this.score }
+                    this.pendingResult = new PendingResult<GameData>(
+                        { nextLevel: this.level.difficulty + 1, score: this.score},
+                        1500);
+                } else {
+                    this.startAttempt();
                 }
 
                 this.fate = null;
-                this.startAttempt();
+            }
+        }
+
+        if (this.pendingResult) {
+            this.pendingResult.update(time);
+            if (this.pendingResult.progress === 1) {
+                this.result = this.pendingResult.data;
+                this.pendingResult = null;
             }
         }
 

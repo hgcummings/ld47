@@ -90,7 +90,22 @@ export default class implements View<GameModel> {
         }
 
         if (!model.debug) {
-            this.renderImageForSprite(this.mask, model.frog);
+            let scale = 1;
+
+            if (model.pendingResult) {
+                const scaleDirection =
+                    model.pendingResult.data.nextLevel / Math.abs(model.pendingResult.data.nextLevel);
+
+                scale = (scaleDirection == 1 ? 7.5 : 20) ** (scaleDirection * model.pendingResult.progress);
+            }
+
+            this.renderImageForSprite(this.mask, model.frog, scale);
+
+            if (scale < 1) {
+                for (let s = scale * 1.5; s < 1.5; s *= 1.5) {
+                    this.renderImageForSprite(this.mask, model.frog, s);
+                }
+            }
         } else {
             this.context.strokeStyle = '#ffcc33';
             for (let i = 1; i < model.grid.length; ++i) {
@@ -111,11 +126,11 @@ export default class implements View<GameModel> {
     }
 
     private renderSprite(sprite: Sprite) {
-        this.renderImageForSprite(sprite.getCurrentFrame(this.unit), sprite);
+        this.renderImageForSprite(sprite.getCurrentFrame(this.unit), sprite, 1);
     }
 
-    private renderImageForSprite(image: HTMLCanvasElement, sprite: Sprite) {
-        this.context.drawSprite(image, sprite.r * this.unit, sprite.t, sprite.facing);
+    private renderImageForSprite(image: HTMLCanvasElement, sprite: Sprite, scale: number) {
+        this.context.drawSprite(image, sprite.r * this.unit, sprite.t, sprite.facing, scale);
     }
 
     private renderMask() {
@@ -131,7 +146,6 @@ export default class implements View<GameModel> {
         ctx.globalCompositeOperation = 'xor';
     
         ctx.filter = `blur(${this.unit}px)`;
-    
     
         ctx.beginPath();
         ctx.ellipse(
