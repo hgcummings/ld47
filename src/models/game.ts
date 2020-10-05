@@ -7,6 +7,7 @@ import { FiniteSprite } from "../sprites";
 import { Splat } from "../sprites/splat";
 import { Home } from "../sprites/home";
 import * as sounds from '../sounds';
+import { GameData } from "./gameData";
 
 export default class implements Model {
     debug: boolean = false;
@@ -29,11 +30,19 @@ export default class implements Model {
     frog: Frog;
     fate: FiniteSprite;
     maxR: number;
+    score: number;
     lives: number = 3;
-    score: number = 0;
+    result: GameData = null;
 
-    constructor() {
-        this.level = new Level(this.grid, 1);
+    constructor(data: GameData) {
+        if (data.nextLevel === -1) {
+            this.level = new Level(this.grid, 1);
+            this.score = 0;
+        } else {
+            this.level = new Level(this.grid, data.nextLevel);
+            this.score = data.score;
+        }
+        
         this.maxR = 0;
         this.frog = new Frog(0, 0, 0);
     }
@@ -88,7 +97,7 @@ export default class implements Model {
                             break;
                         }
                     }
-                    if (!onLily) {
+                    if (!onLily && !this.debug) {
                         this.lives -= 1;
                         this.fate = new Splosh(this.frog.r, this.frog.t, time);
                         this.frog.end();
@@ -100,7 +109,7 @@ export default class implements Model {
                 case 'road':
                     this.frog.speed = 0;
                     for (let car of this.level.cars) {
-                        if (this.frogCollidesWith(car)) {
+                        if (this.frogCollidesWith(car) && !this.debug) {
                             this.lives -= 1;
                             this.fate = new Splat(this.frog.r, this.frog.t, time);
                             this.frog.end();
@@ -119,6 +128,12 @@ export default class implements Model {
         if (this.fate) {
             this.fate.update(time);
             if (!this.fate.active) {
+                if (this.lives === 0) {
+                    this.result = { nextLevel: -1, score: this.score };
+                } else if (this.level.completed()) {
+                    this.result = { nextLevel: this.level.difficulty + 1, score: this.score }
+                }
+
                 this.fate = null;
                 this.frog = new Frog(0, 0, 0);
             }

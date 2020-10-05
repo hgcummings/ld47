@@ -1,26 +1,26 @@
 import GameController from './controllers/game';
 import TitleController from './controllers/title';
 import { Controller } from './controllers';
-
+import { GameData } from './models/gameData';
 
 export default () => {
-    let currentController: Controller;
+    let currentController: Controller<GameData>;
     let animate: () => void;
 
     let titleController = new TitleController();
     let gameController = new GameController();
 
-    const enterTitle = () => {
+    const enterTitle = (gameData) => {
         currentController = titleController;
-        titleController.enter(enterGame);
+        titleController.enter(enterGame, gameData);
     };
 
-    const enterGame = () => {
+    const enterGame = (gameData) => {
         currentController = gameController;
-        gameController.enter(enterTitle);
+        gameController.enter(enterTitle, gameData);
     }
     
-    enterTitle();
+    enterTitle({ nextLevel: 1, score: 0 });
 
     animate = () => {
         currentController.update();

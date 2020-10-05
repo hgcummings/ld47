@@ -1,4 +1,4 @@
-export interface Controller {
-    enter(exitCallback: () => void);
+export interface Controller<TData> {
+    enter(exitCallback: (data: TData) => void, data: TData);
     update();
 }

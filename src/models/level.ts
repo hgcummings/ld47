@@ -8,11 +8,13 @@ export class Level implements Model {
     lilies: Array<Lily>
     cars: Array<Car>
     homes: Array<Home>
+    difficulty: number;
 
     constructor(grid, difficulty) {
         this.lilies = [];
         this.cars = [];
         this.homes = [];
+        this.difficulty = difficulty;
         for (let r = 0; r < grid.length; ++r) {
             const type = grid[r].type
             const length = 2 * Math.PI * r;
@@ -48,5 +50,14 @@ export class Level implements Model {
         for (let car of this.cars) {
             car.update(time);
         }
+    }
+
+    completed() {
+        for (let i = 0; i < 4; ++i) {
+            if (!this.homes[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }

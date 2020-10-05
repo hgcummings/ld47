@@ -5,9 +5,6 @@ Project Description
 ### Todo
 
 - [ ] Regenerate level for new frog
-- [ ] Game over screen  
-- [ ] Handle level win  
-- [ ] Add progression of levels  
 - [ ] High score
 - [ ] Better art  
 - [ ] Make turtles dive/resurface  
@@ -36,3 +33,6 @@ Project Description
 - [x] Track score
 - [x] Pause after reaching home
 - [x] Add sounds  
+- [x] Game over screen  
+- [x] Handle level win  
+- [x] Add progression of levels  
