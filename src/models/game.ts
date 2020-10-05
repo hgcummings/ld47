@@ -36,14 +36,19 @@ export default class implements Model {
 
     constructor(data: GameData) {
         if (data.nextLevel === -1) {
-            this.level = new Level(this.grid, 1);
+            this.level = new Level(1);
             this.score = 0;
         } else {
-            this.level = new Level(this.grid, data.nextLevel);
+            this.level = new Level(data.nextLevel);
             this.score = data.score;
         }
         
         this.maxR = 0;
+        this.startAttempt();
+    }
+
+    startAttempt() {
+        this.level.populate(this.grid);
         this.frog = new Frog(0, 0, 0);
     }
 
@@ -135,7 +140,7 @@ export default class implements Model {
                 }
 
                 this.fate = null;
-                this.frog = new Frog(0, 0, 0);
+                this.startAttempt();
             }
         }
 

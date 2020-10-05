@@ -4,7 +4,6 @@ Project Description
 
 ### Todo
 
-- [ ] Regenerate level for new frog
 - [ ] High score
 - [ ] Better art  
 - [ ] Make turtles dive/resurface  
@@ -36,3 +35,4 @@ Project Description
 - [x] Game over screen  
 - [x] Handle level win  
 - [x] Add progression of levels  
+- [x] Repopulate level for each attempt

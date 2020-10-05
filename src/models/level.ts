@@ -10,23 +10,26 @@ export class Level implements Model {
     homes: Array<Home>
     difficulty: number;
 
-    constructor(grid, difficulty) {
-        this.lilies = [];
-        this.cars = [];
+    constructor(difficulty) {
         this.homes = [];
         this.difficulty = difficulty;
+    }
+
+    populate(grid) {
+        this.lilies = [];
+        this.cars = [];
         for (let r = 0; r < grid.length; ++r) {
             const type = grid[r].type
             const length = 2 * Math.PI * r;
             if (type === 'pond') {
                 this.populateRow(
                     Math.floor(length),
-                    0.7 - (0.1 * difficulty),
+                    0.7 - (0.1 * this.difficulty),
                     t => this.lilies.push(new Lily(r, t, grid[r].speed)))
             } else if (type === 'road') {
                 this.populateRow(
                     Math.floor(length) / 2,
-                    0.225 + (0.075 * difficulty),
+                    0.225 + (0.075 * this.difficulty),
                     t => this.cars.push(new Car(r, t, grid[r].speed)))
             }
         }
