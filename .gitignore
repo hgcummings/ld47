@@ -9,5 +9,4 @@
 #/.pnp.*
 
 # Parcel related files
-dist/
 .parcel-cache/

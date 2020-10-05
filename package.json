@@ -2,7 +2,7 @@
   "name": "ld47",
   "scripts": {
     "start": "parcel serve ./src/index.html",
-    "build": "parcel build ./src/index.html --public-url /ld47/dist"
+    "build": "parcel build ./src/index.html --public-url /ld47"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
