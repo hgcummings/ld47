@@ -1,3 +1,6 @@
+export const gameOver = document.getElementById('game-over') as HTMLAudioElement;
+export const levelWin = document.getElementById('level-win') as HTMLAudioElement;
+
 export const jumpR = new SoundEffect({
     "oldParams": true,
     "wave_type": 0,
@@ -23,7 +26,7 @@ export const jumpR = new SoundEffect({
     "p_lpf_resonance": 0,
     "p_hpf_freq": 0,
     "p_hpf_ramp": 0,
-    "sound_vol": 0.25,
+    "sound_vol": 0.05,
     "sample_rate": 44100,
     "sample_size": 8
 }).generate();
@@ -53,7 +56,7 @@ export const jumpT = new SoundEffect({
     "p_lpf_resonance": -0.029204293848175113,
     "p_hpf_freq": -0.04836648556820207,
     "p_hpf_ramp": 0.04539141664879946,
-    "sound_vol": 0.25,
+    "sound_vol": 0.05,
     "sample_rate": 44100,
     "sample_size": 8,
     "p_vib_delay": null
@@ -84,7 +87,7 @@ export const block = new SoundEffect({
     "p_lpf_resonance": 0.022954887628406438,
     "p_hpf_freq": 0.13848287656881175,
     "p_hpf_ramp": 0.16837606616867193,
-    "sound_vol": 0.25,
+    "sound_vol": 0.05,
     "sample_rate": 44100,
     "sample_size": 8,
     "p_vib_delay": null
@@ -115,7 +118,7 @@ export const splat = new SoundEffect({
     "p_lpf_resonance": 0,
     "p_hpf_freq": 0,
     "p_hpf_ramp": 0,
-    "sound_vol": 0.25,
+    "sound_vol": 0.05,
     "sample_rate": 44100,
     "sample_size": 8
 }).generate();
@@ -145,7 +148,7 @@ export const splosh = new SoundEffect({
     "p_lpf_resonance": 0.6089097845082919,
     "p_hpf_freq": 0.17663025125638,
     "p_hpf_ramp": -0.1637768091693596,
-    "sound_vol": 0.25,
+    "sound_vol": 0.05,
     "sample_rate": 44100,
     "sample_size": 8,
     "p_vib_delay": 0.0239014190378245
@@ -176,7 +179,7 @@ export const home = new SoundEffect({
     "p_lpf_resonance": 0.025755361275815195,
     "p_hpf_freq": 0.007392503783877638,
     "p_hpf_ramp": 0.01888195533070447,
-    "sound_vol": 0.25,
+    "sound_vol": 0.05,
     "sample_rate": 44100,
     "sample_size": 8,
     "p_vib_delay": null

@@ -139,10 +139,12 @@ export default class implements Model {
                     this.pendingResult = new PendingResult<GameData>(
                         { nextLevel: -1, score: this.score},
                         1500);
+                    sounds.gameOver.play();
                 } else if (this.level.completed()) {
                     this.pendingResult = new PendingResult<GameData>(
                         { nextLevel: this.level.difficulty + 1, score: this.score},
                         1500);
+                    sounds.levelWin.play();
                 } else {
                     this.startAttempt();
                 }

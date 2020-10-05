@@ -15,6 +15,7 @@ Project Description
   - [x] Colour palatte
   - [x] Home
   - [x] Road
+  - [x] End animation
   - [ ] Frog
 
 ### Done ✓
@@ -41,3 +42,4 @@ Project Description
 - [x] Handle level win  
 - [x] Add progression of levels  
 - [x] Repopulate level for each attempt
+- [x] Add game over and level win sounds
