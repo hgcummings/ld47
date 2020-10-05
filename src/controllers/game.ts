@@ -78,6 +78,9 @@ export default class implements Controller {
         }
 
         this.keyHandler = event => {
+            if (event.repeat) {
+                return;
+            }
             switch (event.code) {
                 case 'KeyW':
                 case 'ArrowUp':
