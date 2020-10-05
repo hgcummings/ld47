@@ -32,9 +32,6 @@ export class Splosh extends Sprite implements FiniteSprite {
         canvas.height = unit;
 
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#3333cc';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
         for (let j = 0; j < 3; ++j) {
             const r = i - (2 * j) + 1;
             if (r > 0 && r < 9) {

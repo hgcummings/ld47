@@ -1,4 +1,5 @@
 import { Sprite } from ".";
+import colours from "../views/colours";
 
 export class Lily extends Sprite {
     private _facing: number;
@@ -13,7 +14,7 @@ export class Lily extends Sprite {
     }
 
     get facing(): number {
-        return this._facing;
+        return this._facing + this.t;
     }
 
     renderFrame(i: number, unit: number): HTMLCanvasElement {
@@ -23,9 +24,12 @@ export class Lily extends Sprite {
     
         const ctx = canvas.getContext('2d');
     
-        ctx.fillStyle = '#ff00ff';
+        ctx.fillStyle = colours.LILY;
         ctx.beginPath();
-        ctx.arc(unit / 2, unit / 2, unit * 21 / 48, 0, 2 * Math.PI);
+        ctx.moveTo(unit / 2, unit / 2);
+        ctx.bezierCurveTo(unit, unit / 2, unit * 7 / 8, unit * 15/16, unit / 2, unit * 15/16);
+        ctx.arc(unit / 2, unit / 2, unit * 21 / 48, Math.PI / 2, 3 * Math.PI / 2);
+        ctx.bezierCurveTo(unit * 7 / 8, unit / 16, unit, unit / 2, unit / 2, unit / 2);
         ctx.fill();
     
         return canvas;

@@ -1,5 +1,6 @@
 import { Sprite } from ".";
 import * as sounds from '../sounds';
+import colours from "../views/colours";
 
 export class Frog extends Sprite {
     active: boolean = true;
@@ -53,7 +54,7 @@ export class Frog extends Sprite {
     
         const ctx = canvas.getContext('2d');
     
-        ctx.fillStyle = '#669933';
+        ctx.fillStyle = colours.FROG;
         ctx.beginPath();
         ctx.ellipse(unit / 2, unit / 2, unit / 2, unit / 3, 0, 0, 2 * Math.PI);
         ctx.fill();

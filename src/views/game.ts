@@ -2,6 +2,7 @@ import { View } from '.';
 import GameModel from '../models/game';
 import { CanvasRenderingContextPolar2D } from './helpers/polar';
 import { Sprite } from '../sprites';
+import colours from './colours';
 
 export default class implements View<GameModel> {
     context: CanvasRenderingContextPolar2D;
@@ -24,10 +25,10 @@ export default class implements View<GameModel> {
     }
     
     render(model: GameModel) {
-        this.context.fillStyle = '#33cc33';
+        this.context.fillStyle = colours.LAND;
         this.context.fillCircle(this.unit * 24);
 
-        this.context.fillStyle = '#666666';
+        this.context.fillStyle = colours.ROAD;
         this.context.context.fillRect(-this.width / 2, -this.unit * 5 / 2, this.width, (this.unit * 5));
         this.context.context.fillRect(-this.unit * 5 / 2, -this.width / 2, (this.unit * 5), this.width);
 
@@ -40,9 +41,9 @@ export default class implements View<GameModel> {
             }
 
             this.context.fillStyle = {
-                'road': '#666666',
-                'land': '#33cc33',
-                'pond': '#3333cc'
+                'road': colours.ROAD,
+                'land': colours.LAND,
+                'pond': colours.POND
             }[type];
 
             this.context.fillCircle(this.unit * (i + 1/2));

@@ -5,12 +5,16 @@ Project Description
 ### Todo
 
 - [ ] High score
-- [ ] Better art  
 - [ ] Make turtles dive/resurface  
 - [ ] Make cars change lanes  
 
 ### In Progress
 
+- [ ] Better art  
+  - [x] Lily
+  - [x] Colour palatte
+  - [ ] Frog
+  - [ ] Home
 
 ### Done ✓
 
