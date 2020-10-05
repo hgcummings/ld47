@@ -10,14 +10,6 @@ Project Description
 
 ### In Progress
 
-- [ ] Better art  
-  - [x] Lily
-  - [x] Colour palatte
-  - [x] Home
-  - [x] Road
-  - [x] End animation
-  - [ ] Frog
-
 ### Done ✓
 
 - [x] Minimal framework (input/model/render)  
@@ -43,3 +35,10 @@ Project Description
 - [x] Add progression of levels  
 - [x] Repopulate level for each attempt
 - [x] Add game over and level win sounds
+- [x] Better art  
+  - [x] Lily
+  - [x] Colour palatte
+  - [x] Home
+  - [x] Road
+  - [x] End animation
+  - [x] Frog
