@@ -4,11 +4,11 @@ Project Description
 
 ### Todo
 
+- [ ] Regenerate level for new frog
 - [ ] Game over screen  
 - [ ] Handle level win  
 - [ ] Add progression of levels  
 - [ ] High score
-- [ ] Add sounds  
 - [ ] Better art  
 - [ ] Make turtles dive/resurface  
 - [ ] Make cars change lanes  
@@ -35,3 +35,4 @@ Project Description
 - [x] Reduce randomness of NPC sprites
 - [x] Track score
 - [x] Pause after reaching home
+- [x] Add sounds  

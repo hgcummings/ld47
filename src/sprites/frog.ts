@@ -1,8 +1,10 @@
 import { Sprite } from ".";
+import * as sounds from '../sounds';
 
 export class Frog extends Sprite {
     active: boolean = true;
     maxR: number = 0;
+    lastSound = null;
 
     end() {
         this.active = false;
@@ -11,24 +13,28 @@ export class Frog extends Sprite {
     moveClockwise() {
         if (this.active) {
             this.t += this.jumpAngle();
+            this.lastSound = sounds.jumpT;
         }
     }
 
     moveAntiClockwise() {
         if (this.active) {
             this.t -= this.jumpAngle();
+            this.lastSound = sounds.jumpT;
         }
     }
 
     moveOut() {
         if (this.active) {
             this.r += 1;
+            this.lastSound = sounds.jumpR;
         }
     }
 
     moveIn() {
         if (this.active) {
             this.r = Math.max(this.r - 1, 0);
+            this.lastSound = sounds.jumpR;
         }
     }
 

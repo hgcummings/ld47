@@ -6,6 +6,7 @@ import { Splosh } from "../sprites/splosh";
 import { FiniteSprite } from "../sprites";
 import { Splat } from "../sprites/splat";
 import { Home } from "../sprites/home";
+import * as sounds from '../sounds';
 
 export default class implements Model {
     debug: boolean = false;
@@ -46,6 +47,9 @@ export default class implements Model {
     }
     
     update(time: number) {
+        let sound = this.frog.lastSound;
+        this.frog.lastSound = null;
+
         if (this.frog.active) {
             if (this.grid[this.frog.r].type === 'home') {
                 let home = null;
@@ -57,7 +61,8 @@ export default class implements Model {
                 }
 
                 if (home === null || this.level.homes[home]) {
-                    this.frog.moveIn();
+                    this.frog.r -= 1;
+                    sound = sounds.block;
                 } else {
                     const newHome = new Home(home, time)
                     this.fate = newHome;
@@ -65,6 +70,7 @@ export default class implements Model {
                     this.score += 400;
                     this.maxR = 0;
                     this.frog.end();
+                    sound = sounds.home;
                 }
             }
 
@@ -86,6 +92,7 @@ export default class implements Model {
                         this.lives -= 1;
                         this.fate = new Splosh(this.frog.r, this.frog.t, time);
                         this.frog.end();
+                        sound = sounds.splosh;
                     }
 
                     this.score += this.checkScore();
@@ -97,6 +104,7 @@ export default class implements Model {
                             this.lives -= 1;
                             this.fate = new Splat(this.frog.r, this.frog.t, time);
                             this.frog.end();
+                            sound = sounds.splat;
                             break;
                         }
                     }
@@ -118,6 +126,10 @@ export default class implements Model {
 
         this.level.update(time);
         this.frog.update(time);
+
+        if (sound) {
+            sound.getAudio().play();
+        }
     }
 
     toggleDebug() {
