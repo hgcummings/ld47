@@ -56,7 +56,7 @@ export const jumpT = new SoundEffect({
     "p_lpf_resonance": -0.029204293848175113,
     "p_hpf_freq": -0.04836648556820207,
     "p_hpf_ramp": 0.04539141664879946,
-    "sound_vol": 0.05,
+    "sound_vol": 0.03,
     "sample_rate": 44100,
     "sample_size": 8,
     "p_vib_delay": null
