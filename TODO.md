@@ -13,8 +13,9 @@ Project Description
 - [ ] Better art  
   - [x] Lily
   - [x] Colour palatte
+  - [x] Home
+  - [x] Road
   - [ ] Frog
-  - [ ] Home
 
 ### Done ✓
 

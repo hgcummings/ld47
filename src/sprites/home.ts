@@ -32,8 +32,23 @@ export class Home extends Sprite implements FiniteSprite {
         canvas.height = 15 * unit;
 
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#990000';
+        ctx.fillStyle = '#782800';
         ctx.fillRect(unit * 6, unit * 25 / 4, unit * 3 / 2, unit * 5 / 2);
+        ctx.fillStyle = '#a23600';
+        ctx.beginPath();
+        ctx.moveTo(unit * 6, unit * 25 / 4);
+        ctx.lineTo(unit * 27 / 4, unit * 26 / 4);
+        ctx.lineTo(unit * 27 / 4, unit * 34 / 4);
+        ctx.lineTo(unit * 6, unit * 35 / 4);
+        ctx.fill();
+
+        ctx.fillStyle = '#963200';
+        ctx.beginPath();
+        ctx.moveTo(unit * 15 / 2, unit * 25 / 4);
+        ctx.lineTo(unit * 27 / 4, unit * 26 / 4);
+        ctx.lineTo(unit * 27 / 4, unit * 34 / 4);
+        ctx.lineTo(unit * 15 / 2, unit * 35 / 4);
+        ctx.fill();
 
         ctx.fillStyle = '#cccccc';
         for (let i = 0; i < 3; ++i) {

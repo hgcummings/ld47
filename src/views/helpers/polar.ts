@@ -20,8 +20,19 @@ export class CanvasRenderingContextPolar2D {
         this.context.strokeStyle = value;
     }
 
+    set lineWidth(value: number) {
+        this.context.lineWidth = value;
+    }
+
     setLineDash(segments: number[]) {
         this.context.setLineDash(segments);
+    }
+
+    save() {
+        this.context.save();
+    }
+    restore() {
+        this.context.restore();
     }
 
     beginPath() {

@@ -52,10 +52,13 @@ export default class implements View<GameModel> {
                 const circumference = Math.PI * (1 + 2*i);
                 const dashLength = (circumference / Math.round(circumference / (this.unit * 2))) / 2;
 
+                this.context.save();
                 this.context.setLineDash([dashLength, dashLength]);
                 this.context.strokeStyle = '#cccccc';
+                this.context.lineWidth = 2;
                 this.context.circle(this.unit * (i + 1/2));
                 this.context.setLineDash([]);
+                this.context.restore();
             }
 
             lastType = type;
